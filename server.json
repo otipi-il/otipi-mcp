@@ -1,0 +1,39 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.planetebatel-cloud/otipi-mcp",
+  "title": "Otipi",
+  "description": "Send and verify SMS, email and OTP codes in Israel. Free test key, Next.js and Supabase snippets.",
+  "repository": {
+    "url": "https://github.com/planetebatel-cloud/otipi-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "websiteUrl": "https://otipi.co.il",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "otipi-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "OTIPI_KEY",
+          "description": "Otipi API key. Use a free sk_test_ key from https://otipi.co.il/signup, or sk_live_ for real sending.",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "OTIPI_BASE_URL",
+          "description": "Override the API base URL. Defaults to https://otipi.co.il.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string",
+          "default": "https://otipi.co.il"
+        }
+      ]
+    }
+  ]
+}
