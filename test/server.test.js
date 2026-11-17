@@ -234,7 +234,7 @@ test('get_integration_snippet works without a key for all frameworks', async () 
   assert.match(exp, /app\.post\('\/otp\/verify'/);
 
   for (const snippet of [next, nextJs, sup, exp]) {
-    assert.doesNotMatch(snippet, /2014|2013/);
+    assert.doesNotMatch(snippet, /\u2014|\u2013/);
   }
 
   const bad = await s.tool('get_integration_snippet', { framework: 'rails' });
