@@ -121,18 +121,14 @@ export default function OtpPage() {
 }
 
 function supabase() {
-  return String.raw`Supabase Auth with Israeli SMS via Otipi (Send SMS hook).
+  return String.raw`Supabase Auth with Israeli SMS and email via Otipi (Send SMS hook, Send Email hook). No code is needed on the server.
 
-1. Deploy the edge function from https://github.com/planetebatel-cloud/otipi-supabase
+1. In the Otipi dashboard open the Connect page, tab "Supabase, SMS" (and "Supabase, email" for the auth emails).
+   Copy the hook address (https://otipi.co.il/v1/integrations/supabase/sms/<token>) and its secret (v1,whsec_...).
 
-  supabase functions deploy otipi-sms-hook --no-verify-jwt
-  supabase secrets set OTIPI_KEY=sk_test_... SEND_SMS_HOOK_SECRETS='v1,whsec_...'
-
-2. Enable it in the Supabase Dashboard: Authentication > Hooks > Send SMS hook (HTTP), with URL
-
-  https://<project-ref>.supabase.co/functions/v1/otipi-sms-hook
-
-   Use the same whsec_ secret that you set in SEND_SMS_HOOK_SECRETS.
+2. In the Supabase Dashboard: Authentication > Hooks > Send SMS hook > HTTPS.
+   Paste the address and the secret. Do not add an Authorization header: Otipi checks the Standard Webhooks signature.
+   For emails, add a Send Email hook the same way and write your Supabase project URL on the Otipi Connect page.
 
 3. Client code (supabase-js):
 
@@ -146,7 +142,7 @@ const { data, error: verifyError } = await supabase.auth.verifyOtp({
   type: 'sms',
 });
 
-Test keys (sk_test_) only deliver to numbers confirmed via add_test_recipient; switch to sk_live_ for real users.
+The hook starts in test mode: codes really reach only your own confirmed phone (5 free SMS); switch the hook to live mode on the Connect page once a plan is active.
 `;
 }
 

@@ -224,10 +224,11 @@ test('get_integration_snippet works without a key for all frameworks', async () 
   assert.doesNotMatch(nextJs, /OTIPI_KEY!/);
 
   const sup = text(await s.tool('get_integration_snippet', { framework: 'supabase' }));
-  assert.match(sup, /supabase functions deploy otipi-sms-hook --no-verify-jwt/);
+  assert.match(sup, /Connect page/);
+  assert.match(sup, /v1\/integrations\/supabase\/sms\/<token>/);
   assert.match(sup, /signInWithOtp/);
   assert.match(sup, /verifyOtp/);
-  assert.match(sup, /planetebatel-cloud\/otipi-supabase/);
+  assert.doesNotMatch(sup, /functions deploy/);
 
   const exp = text(await s.tool('get_integration_snippet', { framework: 'express' }));
   assert.match(exp, /app\.post\('\/otp\/send'/);
