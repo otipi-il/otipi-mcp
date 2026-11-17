@@ -1,11 +1,13 @@
 // @ts-check
 // Tool definitions and handlers. Handlers return text; errors are thrown as ToolError.
-import { api, getKey, getBaseUrl, OtipiHttpError } from './client.js';
+// Shared as is by the npm package (stdio) and the Otipi service (/mcp over HTTP): keep the copies the same.
+// The transport hands in { api, hasKey, signupHelp }: how to call the Otipi API with the caller's key.
+import { ToolError, explainError } from './errors.js';
 import { getSnippet } from './snippets.js';
 
-export class ToolError extends Error {}
+export { ToolError };
 
-const SIGNUP_HELP =
+export const STDIO_SIGNUP_HELP =
   'No Otipi API key found. Get a free test key at https://otipi.co.il/signup (it starts with sk_test_), ' +
   'then set it as the OTIPI_KEY environment variable in your MCP client config, for example: ' +
   '"env": { "OTIPI_KEY": "sk_test_..." }, and restart the client. ' +
@@ -13,36 +15,6 @@ const SIGNUP_HELP =
 
 const PHONE_DESC =
   'Israeli mobile number in E.164 format +9725XXXXXXXX (05XXXXXXXX is also accepted), or an email address for the email channel.';
-
-/** Hints keyed by API error code. */
-const HINTS = {
-  test_key_required: 'This action only works with a test key (sk_test_...). You are using a live key.',
-  too_many_test_recipients: 'The account reached the limit of test recipients. Ask the human to remove one in the Otipi dashboard.',
-  invalid_recipient: 'The recipient is not valid. Use an Israeli mobile number like +972501234567 or a valid email address.',
-  rate_limited: 'Too many requests. Wait a minute and try again.',
-  test_mode_busy: 'Test mode is busy right now. Retry in a few seconds.',
-  not_found: 'Nothing pending for this recipient. Call add_test_recipient first.',
-  wrong_code: 'The code is wrong. Ask the human to re-check the code they received.',
-  code_expired: 'The code expired. Call add_test_recipient again to get a new one.',
-  too_many_attempts: 'Too many wrong attempts. Wait a few minutes, then call add_test_recipient again.',
-  free_test_sms_used:
-    'The 5 free test SMS of this account are used up. Use the email channel, reuse test_code from earlier sends, or subscribe at https://otipi.co.il to get a live key.',
-  too_many_codes: 'Too many codes were requested for this number. Wait a few minutes before sending another.',
-  unauthorized: 'The API key was rejected. Check OTIPI_KEY (it must start with sk_test_ or sk_live_).',
-  invalid_api_key: 'The API key was rejected. Check OTIPI_KEY (it must start with sk_test_ or sk_live_).',
-};
-
-/** @param {unknown} err @returns {string} */
-export function explainError(err) {
-  if (err instanceof ToolError) return err.message;
-  if (err instanceof OtipiHttpError) {
-    if (err.code === 'missing_key') return SIGNUP_HELP;
-    const hint = /** @type {Record<string,string>} */ (HINTS)[err.code] || (err.status === 401 ? HINTS.unauthorized : '');
-    const head = err.status ? `Otipi API error ${err.status} ${err.code}: ${err.message}` : `${err.code}: ${err.message}`;
-    return hint ? `${head}\n${hint}` : head;
-  }
-  return `Unexpected error: ${err instanceof Error ? err.message : String(err)}`;
-}
 
 /** @param {any} args @param {string} name @param {number} [max] */
 function str(args, name, max) {
@@ -65,16 +37,20 @@ function oneOf(args, name, allowed, def) {
 /** @param {unknown} data */
 const json = (data) => JSON.stringify(data, null, 2);
 
-function requireKey() {
-  if (!getKey()) throw new ToolError(SIGNUP_HELP);
-}
-
 /**
  * @typedef {{ name: string, description: string, inputSchema: object, run: (args: any) => Promise<string>, offline?: boolean }} Tool
  */
 
-/** @type {Tool[]} */
-export const tools = [
+/**
+ * @param {{ api: (method: 'GET'|'POST', path: string, body?: object) => Promise<any>, hasKey: () => boolean, signupHelp?: string }} client
+ * @returns {Tool[]}
+ */
+export function createTools({ api, hasKey, signupHelp = STDIO_SIGNUP_HELP }) {
+  const requireKey = () => {
+    if (!hasKey()) throw new ToolError(signupHelp);
+  };
+  const explain = (/** @type {unknown} */ err) => explainError(err, signupHelp);
+  return [
   {
     name: 'send_test_otp',
     description:
@@ -119,7 +95,7 @@ export const tools = [
           }
           lines.push(`message_id: ${otp.message_id} (use check_delivery_status for details).`);
         } catch (err) {
-          lines.push(`message_id: ${otp.message_id}. Could not fetch delivery details: ${explainError(err)}`);
+          lines.push(`message_id: ${otp.message_id}. Could not fetch delivery details: ${explain(err)}`);
         }
       }
       return lines.join('\n');
@@ -270,5 +246,4 @@ export const tools = [
     },
   },
 ];
-
-export { getBaseUrl };
+}

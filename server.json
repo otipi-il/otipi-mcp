@@ -35,5 +35,19 @@
         }
       ]
     }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://otipi.co.il/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer followed by an Otipi API key, for example \"Bearer sk_test_...\". Clients that support OAuth can sign in instead.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
   ]
 }

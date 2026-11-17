@@ -4,6 +4,18 @@ MCP server for [Otipi](https://otipi.co.il), an SMS, email and OTP API for Israe
 
 Zero runtime dependencies. Plain Node.js (>= 18), stdio transport.
 
+
+## Remote server, nothing to install
+
+The same tools run at **https://otipi.co.il/mcp** (Streamable HTTP).
+
+- **Claude.ai, ChatGPT** and other apps with connectors: add a custom connector with that address. You sign in to Otipi and allow it (OAuth); the app gets a test key of its own that you can revoke in the dashboard.
+- **Claude Code**: `claude mcp add --transport http otipi https://otipi.co.il/mcp --header "Authorization: Bearer sk_test_..."`
+- **Cursor** (`.cursor/mcp.json`): `{ "mcpServers": { "otipi": { "url": "https://otipi.co.il/mcp", "headers": { "Authorization": "Bearer sk_test_..." } } } }`
+- **VS Code**: `{ "name": "otipi", "type": "http", "url": "https://otipi.co.il/mcp", "headers": { "Authorization": "Bearer sk_test_..." } }`
+
+A free test key comes in one click after sign-up at https://otipi.co.il/signup. This npm package is the local alternative for clients that only run stdio servers.
+
 ## Get a key
 
 Sign up at https://otipi.co.il/signup to get a free test key (`sk_test_...`). Live keys (`sk_live_...`) send real messages and need a subscription.

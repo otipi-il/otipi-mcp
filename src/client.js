@@ -1,5 +1,8 @@
 // @ts-check
 // Minimal Otipi HTTP client. The API key is read from env and never logged.
+import { OtipiHttpError } from './errors.js';
+
+export { OtipiHttpError };
 
 const TIMEOUT_MS = 15000;
 
@@ -9,19 +12,6 @@ export function getKey() {
 
 export function getBaseUrl() {
   return (process.env.OTIPI_BASE_URL || 'https://otipi.co.il').replace(/\/+$/, '');
-}
-
-export class OtipiHttpError extends Error {
-  /**
-   * @param {number} status HTTP status, 0 for network errors
-   * @param {string} code
-   * @param {string} message
-   */
-  constructor(status, code, message) {
-    super(message);
-    this.status = status;
-    this.code = code;
-  }
 }
 
 /**
