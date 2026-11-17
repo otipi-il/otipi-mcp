@@ -83,7 +83,7 @@ With a test key, messages to anyone are only kept in the Otipi log (sandbox). Me
 
 | Tool | What it does |
 | --- | --- |
-| `send_test_otp` | Send an OTP (sms, whatsapp, email or auto). Reports real vs sandbox delivery and includes `test_code`. |
+| `send_test_otp` | Send an OTP (sms or email). Reports real vs sandbox delivery and includes `test_code`. |
 | `verify_otp` | Check a code for a recipient. |
 | `add_test_recipient` | Start confirming a number or email as a test recipient. |
 | `confirm_test_recipient` | Finish confirmation with the 6-digit code. |

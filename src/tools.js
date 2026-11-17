@@ -78,7 +78,7 @@ export const tools = [
   {
     name: 'send_test_otp',
     description:
-      'Send a one-time verification code (OTP) by SMS, WhatsApp or email to a phone number in Israel using Otipi, in test mode. ' +
+      'Send a one-time verification code (OTP) by SMS or email to a phone number in Israel using Otipi, in test mode. ' +
       'Use this to try the login/2FA flow end to end. With a test key the message really arrives ONLY if the recipient was confirmed ' +
       'with add_test_recipient + confirm_test_recipient; otherwise it is kept in the sandbox log and nothing is delivered. ' +
       'The result says which case happened and includes test_code when available, so you can verify it with verify_otp. ' +
@@ -88,7 +88,7 @@ export const tools = [
       properties: {
         to: { type: 'string', description: PHONE_DESC },
         app: { type: 'string', maxLength: 40, description: 'Brand name shown in the message, for example "MyApp". Max 40 characters.' },
-        channel: { type: 'string', enum: ['sms', 'whatsapp', 'email', 'auto'], default: 'sms', description: 'Delivery channel. Default sms.' },
+        channel: { type: 'string', enum: ['sms', 'email'], default: 'sms', description: 'Delivery channel. Default sms.' },
         language: { type: 'string', enum: ['he', 'ar', 'ru', 'en'], default: 'he', description: 'Message language. Default he (Hebrew).' },
       },
       required: ['to', 'app'],
@@ -98,7 +98,7 @@ export const tools = [
       requireKey();
       const to = str(args, 'to');
       const app = str(args, 'app', 40);
-      const channel = oneOf(args, 'channel', ['sms', 'whatsapp', 'email', 'auto'], 'sms');
+      const channel = oneOf(args, 'channel', ['sms', 'email'], 'sms');
       const language = oneOf(args, 'language', ['he', 'ar', 'ru', 'en'], 'he');
       const otp = await api('POST', '/otp/send', { to, app, channel, language });
       const lines = [`OTP request accepted (id ${otp.id}, channel ${otp.channel}, to ${otp.to}, expires ${otp.expires_at}).`];
