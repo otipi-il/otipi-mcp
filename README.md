@@ -122,7 +122,7 @@ The tests spawn the server and drive it over stdio against a local fake Otipi AP
 
 ## Publishing (for maintainers)
 
-Not automated. Dmitry runs these by hand.
+Not automated: a maintainer runs these by hand.
 
 The GitHub owner is set to `planetebatel-cloud` in `package.json` (`mcpName`, `repository`) and `server.json` (`name`, `repository`). The `mcpName` must start with `io.github.<github-username>/` for GitHub login, so adjust all of these together if the repository lives under a different owner.
 
