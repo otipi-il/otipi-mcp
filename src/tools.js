@@ -86,7 +86,7 @@ export function createTools({ api, hasKey, signupHelp = STDIO_SIGNUP_HELP }) {
             lines.push('Delivery: REAL. The recipient is confirmed, so the code was actually sent to the device. Ask the human to read it.');
           } else if (msg.test_delivery === 'sandbox') {
             lines.push(
-              'Delivery: SANDBOX. This number is not a confirmed test recipient, so nothing was delivered to a device; the message only exists in the Otipi log. ' +
+              'Delivery: SANDBOX. Nothing was delivered to a device; the message only exists in the Otipi log. Either this number is not a confirmed test recipient, or real test delivery for this channel is not switched on yet (list_test_recipients shows which). ' +
                 'To receive real messages, call add_test_recipient with this number, ask the human for the 6-digit code they receive, then call confirm_test_recipient. ' +
                 (otp.test_code ? 'You can still complete the flow now using the test_code above.' : '')
             );
@@ -185,9 +185,12 @@ export function createTools({ api, hasKey, signupHelp = STDIO_SIGNUP_HELP }) {
       const r = await api('GET', '/test-recipients');
       const rows = (r.data || []).map((/** @type {any} */ x) => `- ${x.to} (${x.channel}): ${x.status}`);
       const fs = r.free_sms;
+      const rd = r.real_delivery;
+      const off = rd ? ['sms', 'email'].filter((c) => rd[c] === false) : [];
       return [
         rows.length ? `Test recipients:\n${rows.join('\n')}` : 'No test recipients yet. Use add_test_recipient.',
         fs ? `Free test SMS: ${fs.left} left of ${fs.total} (used ${fs.used}).` : '',
+        off.length ? `Real test delivery is not switched on yet for: ${off.join(', ')}. Messages of that channel stay in the sandbox; use test_code to finish the flow.` : '',
       ]
         .filter(Boolean)
         .join('\n');
