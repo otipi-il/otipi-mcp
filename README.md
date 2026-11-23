@@ -1,4 +1,8 @@
+<a href="https://otipi.co.il"><img src=".github/otipi-logo.png" alt="Otipi" width="64" height="64"></a>
+
 # otipi-mcp
+
+[![npm](https://img.shields.io/npm/v/otipi-mcp?color=f0481c&label=npm)](https://www.npmjs.com/package/otipi-mcp) [![test](https://github.com/planetebatel-cloud/otipi-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/planetebatel-cloud/otipi-mcp/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-15120f)](LICENSE) [![Website](https://img.shields.io/badge/otipi.co.il-15120f)](https://otipi.co.il)
 
 MCP server for [Otipi](https://otipi.co.il), an SMS, email and OTP API for Israel. It lets AI agents (Claude Code, Cursor, Claude Desktop, VS Code) send and verify one-time codes in test mode, check delivery, and generate ready-to-paste integration code for Next.js, Supabase and Express.
 
