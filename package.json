@@ -1,12 +1,12 @@
 {
   "name": "otipi-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server for Otipi: send and verify SMS, email and OTP codes in Israel from AI agents.",
   "type": "module",
   "bin": {
     "otipi-mcp": "src/index.js"
   },
-  "mcpName": "io.github.planetebatel-cloud/otipi-mcp",
+  "mcpName": "io.github.otipi-il/otipi-mcp",
   "main": "src/server.js",
   "files": [
     "src",
@@ -35,7 +35,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/planetebatel-cloud/otipi-mcp.git"
+    "url": "git+https://github.com/otipi-il/otipi-mcp.git"
   },
   "homepage": "https://otipi.co.il"
 }

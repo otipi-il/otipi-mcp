@@ -2,7 +2,7 @@
 
 # otipi-mcp
 
-[![npm](https://img.shields.io/npm/v/otipi-mcp?color=f0481c&label=npm)](https://www.npmjs.com/package/otipi-mcp) [![test](https://github.com/planetebatel-cloud/otipi-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/planetebatel-cloud/otipi-mcp/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-15120f)](LICENSE) [![Website](https://img.shields.io/badge/otipi.co.il-15120f)](https://otipi.co.il)
+[![npm](https://img.shields.io/npm/v/otipi-mcp?color=f0481c&label=npm)](https://www.npmjs.com/package/otipi-mcp) [![test](https://github.com/otipi-il/otipi-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/otipi-il/otipi-mcp/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-15120f)](LICENSE) [![Website](https://img.shields.io/badge/otipi.co.il-15120f)](https://otipi.co.il)
 
 MCP server for [Otipi](https://otipi.co.il), an SMS, email and OTP API for Israel. It lets AI agents (Claude Code, Cursor, Claude Desktop, VS Code) send and verify one-time codes in test mode, check delivery, and generate ready-to-paste integration code for Next.js, Supabase and Express.
 
@@ -128,7 +128,7 @@ The tests spawn the server and drive it over stdio against a local fake Otipi AP
 
 Not automated: a maintainer runs these by hand.
 
-The GitHub owner is set to `planetebatel-cloud` in `package.json` (`mcpName`, `repository`) and `server.json` (`name`, `repository`). The `mcpName` must start with `io.github.<github-username>/` for GitHub login, so adjust all of these together if the repository lives under a different owner.
+The GitHub owner is set to `otipi-il` in `package.json` (`mcpName`, `repository`) and `server.json` (`name`, `repository`). The `mcpName` must start with `io.github.<github-username>/` for GitHub login, so adjust all of these together if the repository lives under a different owner.
 
 ```
 npm publish --access public

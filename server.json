@@ -1,19 +1,19 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.planetebatel-cloud/otipi-mcp",
+  "name": "io.github.otipi-il/otipi-mcp",
   "title": "Otipi",
   "description": "Send and verify SMS, email and OTP codes in Israel. Free test key, Next.js and Supabase snippets.",
   "repository": {
-    "url": "https://github.com/planetebatel-cloud/otipi-mcp",
+    "url": "https://github.com/otipi-il/otipi-mcp",
     "source": "github"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "websiteUrl": "https://otipi.co.il",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "otipi-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "transport": {
         "type": "stdio"
       },
